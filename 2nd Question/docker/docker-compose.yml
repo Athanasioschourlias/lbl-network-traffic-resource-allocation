@@ -1,0 +1,17 @@
+version: "3.9"
+
+volumes:
+    redis_datasets:
+
+services:
+
+  redis:
+    container_name: redis-db
+    image: "redis:6.2-alpine"
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis_datasets:/datasets
+
