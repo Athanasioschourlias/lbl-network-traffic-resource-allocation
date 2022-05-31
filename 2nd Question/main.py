@@ -168,7 +168,7 @@ def q8DecomposeTrend():
     pyplot.show()
 
 
-def q9ARMA():
+def q9ARIMA():
     df = table.copy()
 
     df.drop(df['bytesOriginator'].loc[df['bytesOriginator'] == '?'].index, inplace=True)
@@ -196,8 +196,8 @@ def q9ARMA():
     return test, yhat
 
 
-def q10ARMATest():
-    test, predictions = q9ARMA()
+def q10ARIMATest():
+    test, predictions = q9ARIMA()
 
     rmse = sqrt(mean_squared_error(test, predictions))
     print('Test RMSE: %.3f' % rmse)
