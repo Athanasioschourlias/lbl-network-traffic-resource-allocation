@@ -16,7 +16,7 @@ def parser(x):
 
 def datasetRead():
     return pd.read_csv(
-        os.path.join(os.getcwd(), "datasets", "lbl-conn-dataset-30" + ".red"),
+        os.path.join(os.getcwd(), "2nd question", "datasets", "lbl-conn-dataset-30" + ".red"),
         sep=' ',
         header=0,
         index_col=0,
@@ -183,9 +183,8 @@ def q9ARMA():
     history = [x for x in train]
     predictions = list()
 
-
     for t in range(len(test)):
-        model = sm.tsa.arima.ARIMA(history, order=(1, 1, 0))
+        model = sm.tsa.arima.ARIMA(history, order=(5, 1, 0))
         model_fit = model.fit()
         output = model_fit.forecast()
         yhat = output[0]
@@ -194,14 +193,17 @@ def q9ARMA():
         history.append(obs)
         print('predicted=%f, expected=%f' % (yhat, obs))
 
-        return test, yhat
+    return test, yhat
 
 
 def q10ARMATest():
     test, predictions = q9ARMA()
-    mae = mean_absolute_error(test, predictions)
-    print('Test MAE: %.3f' % mae)
 
+    rmse = sqrt(mean_squared_error(test, predictions))
+    print('Test RMSE: %.3f' % rmse)
+    pyplot.plot(test)
+    pyplot.plot(predictions, color='red')
+    pyplot.show()
 
 
 if __name__ == "__main__":
@@ -235,8 +237,7 @@ if __name__ == "__main__":
     # q8DecomposeTrend()
 
     # Question 9
-    # q9ARMA()
+    q9ARMA()
 
     # Question 10
-    q10ARMATest()
-
+    # q10ARMATest()
